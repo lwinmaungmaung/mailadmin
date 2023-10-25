@@ -24,14 +24,17 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\TextInput::make('email')->email()->required()->disabledOn('edit'),
-                Forms\Components\TextInput::make('current_password')->visibleOn('edit'),
+                Forms\Components\TextInput::make('email')->email()->disabled()->visibleOn('edit'),
+                Forms\Components\TextInput::make('current_password')->password()->currentPassword()->visibleOn('edit'),
                 Forms\Components\TextInput::make('password')->password()->confirmed()->visibleOn('edit'),
                 Forms\Components\TextInput::make('password_confirmation')->password()->visibleOn('edit'),
+                Forms\Components\TextInput::make('email')->email()->required()->unique(User::class)->visibleOn('create'),
                 Forms\Components\TextInput::make('password')->password()->confirmed()->required()->visibleOn('create'),
                 Forms\Components\TextInput::make('password_confirmation')->password()->required()->visibleOn('create'),
-                Forms\Components\Checkbox::make('is_active')->default(1),
-                Forms\Components\Checkbox::make('is_super_admin')->default(0),
+                Forms\Components\Fieldset::make('Options')->schema([
+                    Forms\Components\Checkbox::make('is_active')->default(1),
+                    Forms\Components\Checkbox::make('is_super_admin')->default(0),
+                ])
             ]);
     }
 

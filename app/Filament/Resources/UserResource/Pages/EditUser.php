@@ -5,6 +5,7 @@ namespace App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Auth;
 
 class EditUser extends EditRecord
 {
@@ -22,7 +23,7 @@ class EditUser extends EditRecord
         if($data['password']===null){
             unset($data['password']);
         }
-        unset($data['password']);
+        unset($data['password'],$data['email']);
 
         return $data;
     }
